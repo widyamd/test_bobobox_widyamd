@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* CUSTOM CSS */
+
+.btn-whislist{
+  right: 0;
+}
