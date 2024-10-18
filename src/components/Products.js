@@ -6,6 +6,9 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { CardText } from "react-bootstrap";
 import { FaRegHeart } from "react-icons/fa";
+import { Rating } from '@smastrom/react-rating'
+
+import '@smastrom/react-rating/style.css'
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -47,15 +50,19 @@ const Products = () => {
                     <Row>
                       <Col>
                         <Card.Text>
-                          {(
-                            item.price -
-                            (item.discountPercentage / 100) * item.price
-                          ).toFixed(2)}
+                          <h2 className="text-danger">
+                            {(
+                              item.price -
+                              (item.discountPercentage / 100) * item.price
+                            ).toFixed(2)}
+                          </h2>
                         </Card.Text>
                       </Col>
                       <Col>
                         <CardText>
-                          <p className="text-end">{item.price}</p>
+                          <h4 className="text-end text-secondary">
+                            <del>{item.price}</del>
+                          </h4>
                         </CardText>
                       </Col>
                     </Row>
@@ -64,14 +71,9 @@ const Products = () => {
                         Only {item.stock} left in stock
                       </p>
                     )}
-                    <Button variant="primary">Go somewhere</Button>
-                    {/* <FaStar
-              className="star"
-              color={item.rating <= (5) ? "#ffc107" : "#e4e5e9"} // Yellow or grey
-              size={30}
-            
-            /> */}
-                    {item.rating} / 5
+                   
+                    {item.rating}
+                    <Rating style={{ maxWidth: 180 }} value={item.rating} readOnly />
                   </Card.Body>
                 </Card>
               </Col>
