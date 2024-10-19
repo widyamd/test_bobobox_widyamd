@@ -107,3 +107,14 @@
     border: 0;
     background: none!important;
 }
+
+.card-text-custom {
+    border-color: red;
+    border: 1px solid red;
+    padding: 5px;
+    margin-bottom: 0;
+}
+
+.card-text-custom h5{
+    margin-bottom: 0;
+}

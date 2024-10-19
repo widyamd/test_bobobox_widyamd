@@ -4,12 +4,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { CardText } from "react-bootstrap";
 import { FaRegHeart } from "react-icons/fa";
 import CustomNavbar from "./Navbar";
 import Category from "./Category";
 import { Link } from "react-router-dom";
-import { MdOutlineDiscount } from "react-icons/md";
 import RatingFilter from "./RatingFilter";
 
 const Products = () => {
@@ -164,32 +162,33 @@ const Products = () => {
                       <Card.Body className="py-0">
                        
                         <Row>
-                          <Col lg="5">
+                          <Col>
                             <Card.Text>
-                              <h5 className="text-danger">
-                                <MdOutlineDiscount /> &nbsp;
+                              <h5 className="text-danger mb-0">
+                               <span  className="card-text-custom rounded">
+                                $
                                 {(
                                   item.price -
                                   (item.discountPercentage / 100) * item.price
-                                ).toFixed(2)}
+                                ).toFixed(2)} 
+                               </span>
+                               &nbsp;
+                                <span className="text-secondary text-end mb-0">
+                                $ <del>{item.price}</del>
+
+                                </span>
                               </h5>
                             </Card.Text>
                           </Col>
-                          <Col className="align-content-center">
-                            <CardText>
-                              <h5 className="text-secondary text-end mb-0">
-                                <del>{item.price}</del>
-                              </h5>
-                            </CardText>
-                          </Col>
-                          <Col className="align-content-center">
+                        
+                          <Col className="align-content-center" lg="3">
                             <p className="mb-0 text-end fw-bold">
                               {item.discountPercentage}%
                             </p>
                           </Col>
                         </Row>
                         <Row>
-                          <Col className="mb-1">
+                          <Col className="mb-1 mt-3">
                             {item.stock <= 5 && (
                               <small className="text-danger">
                                 Only {item.stock} left in stock
