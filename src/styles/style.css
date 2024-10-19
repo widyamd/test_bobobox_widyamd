@@ -38,27 +38,26 @@
 .text-light{
     color: #a7a7a7!important;
 }
-
 .suggestions-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    position: absolute; 
-    z-index: 1000;
-    background: white; 
-    width: auto; 
-    max-height: 200px; 
-    overflow-y: auto;
+    border: 1px solid #ced4da; /* Border to match input field */
+    border-radius: 0.25rem; /* Match the input field border radius */
+    position: absolute; /* Positioning for dropdown */
+    background-color: white; /* Background color */
+    z-index: 1000; /* Ensure it appears above other elements */
   }
+  
   .suggestions-list li {
-    padding: 8px 12px; 
-    cursor: pointer;
+    padding: 8px; /* Padding for better click area */
+    cursor: pointer; /* Cursor changes to pointer */
   }
+  
   .suggestions-list li:hover {
-    background-color: #f1f1f1; 
+    background-color: #f8f9fa; /* Highlight on hover */
   }
+  
 
   /* PRODUCT DETAILS */
 .product-detail {
