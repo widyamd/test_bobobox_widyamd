@@ -57,6 +57,9 @@
   .suggestions-list li:hover {
     background-color: #f8f9fa; /* Highlight on hover */
   }
+  .text-decoration-none {
+    text-decoration: none !important; /* Remove underline */
+  }
   
 
   /* PRODUCT DETAILS */

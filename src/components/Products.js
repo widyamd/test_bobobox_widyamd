@@ -87,16 +87,16 @@ const Products = () => {
 
   return (
     <>
-          <CustomNavbar
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            suggestions={suggestions}
-            setSuggestions={setSuggestions}
-            categories={categories}
-            selectedCategories={selectedCategories}
-            setSelectedCategories={setSelectedCategories}
-            handleSearchChange={handleSearchChange}
-          />
+      <CustomNavbar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        suggestions={suggestions}
+        setSuggestions={setSuggestions}
+        categories={categories}
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
+        handleSearchChange={handleSearchChange}
+      />
        
       <Container className="mt-3">
         <Row>
@@ -111,7 +111,7 @@ const Products = () => {
             <Row>
               {currentProducts.map((item) => (
                 <Col lg="4" className="col-product" key={item.id}>
-                  <Link to={`/product/${item.id}`}>
+                  <Link to={`/product/${item.id}`} className="text-decoration-none"> {/* Added class here */}
                     <Card className="card-product">
                       <Row>
                         <Col className="text-end position-absolute p-0">
