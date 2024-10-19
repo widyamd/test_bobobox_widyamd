@@ -14,7 +14,7 @@ const CustomNavbar = ({ searchTerm, setSearchTerm, suggestions, setSuggestions, 
     <Navbar bg="light" expand="lg" expanded={!isCollapsed}>
       <Container>
         <Row className='w-100'>
-          <Col lg="2">
+          <Col lg="3">
             <Navbar.Brand href="#home">Product Store</Navbar.Brand>
           </Col>
           <Col>
@@ -33,7 +33,6 @@ const CustomNavbar = ({ searchTerm, setSearchTerm, suggestions, setSuggestions, 
                       Search
                     </Button>
                   </InputGroup>
-                  {/* Suggestions Dropdown */}
                   {suggestions.length > 0 && (
                     <ul className="suggestions-list">
                       {suggestions.map((suggestion, index) => (

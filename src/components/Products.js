@@ -155,37 +155,41 @@ const Products = () => {
                         className="card-img-product"
                         src={item.thumbnail}
                       />
-                      <Card.Body>
-                        <Card.Title className="text-primary">
+                      <Card.Header>
+                      <Card.Title className="text-primary">
                           {item.title}
                         </Card.Title>
+                      </Card.Header>
+                      
+                      <Card.Body className="py-0">
+                       
                         <Row>
                           <Col lg="5">
                             <Card.Text>
-                              <h3 className="text-danger">
+                              <h5 className="text-danger">
                                 <MdOutlineDiscount /> &nbsp;
                                 {(
                                   item.price -
                                   (item.discountPercentage / 100) * item.price
                                 ).toFixed(2)}
-                              </h3>
+                              </h5>
                             </Card.Text>
                           </Col>
                           <Col className="align-content-center">
                             <CardText>
-                              <h5 className="text-secondary mb-0">
+                              <h5 className="text-secondary text-end mb-0">
                                 <del>{item.price}</del>
                               </h5>
                             </CardText>
                           </Col>
                           <Col className="align-content-center">
-                            <p className="mb-0 fw-bold">
+                            <p className="mb-0 text-end fw-bold">
                               {item.discountPercentage}%
                             </p>
                           </Col>
                         </Row>
                         <Row>
-                          <Col className="mb-3">
+                          <Col className="mb-1">
                             {item.stock <= 5 && (
                               <small className="text-danger">
                                 Only {item.stock} left in stock
@@ -193,13 +197,21 @@ const Products = () => {
                             )}
                           </Col>
                         </Row>
-                        <Row>
+                       
+                      </Card.Body>
+                      <Card.Footer className="custom-card-footer">
+                      <Row>
                           <Col className="d-flex">
-                            <svg xmlns="http://www.w3.org/2000/svg" 
-                            width="20" height="20" fill="#ffb700" viewBox="0 0 256 256">
-                              <path d="M234.29,114.85l-45,38.83L203,211.75a16.4,16.4,0,0,1-24.5,17.82L128,198.49,77.47,229.57A16.4,16.4,0,0,1,53,211.75l13.76-58.07-45-38.83A16.46,16.46,0,0,1,31.08,86l59-4.76,22.76-55.08a16.36,16.36,0,0,1,30.27,0l22.75,55.08,59,4.76a16.46,16.46,0,0,1,9.37,28.86Z"></path></svg>
-                            &nbsp;  <p>{item.rating.toFixed(1)}</p>
-
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              fill="#ffb700"
+                              viewBox="0 0 256 256"
+                            >
+                              <path d="M234.29,114.85l-45,38.83L203,211.75a16.4,16.4,0,0,1-24.5,17.82L128,198.49,77.47,229.57A16.4,16.4,0,0,1,53,211.75l13.76-58.07-45-38.83A16.46,16.46,0,0,1,31.08,86l59-4.76,22.76-55.08a16.36,16.36,0,0,1,30.27,0l22.75,55.08,59,4.76a16.46,16.46,0,0,1,9.37,28.86Z"></path>
+                            </svg>
+                            &nbsp; <p>{item.rating.toFixed(1)}</p>
                           </Col>
                           <Col>
                             <p className="text-light text-end">
@@ -207,7 +219,7 @@ const Products = () => {
                             </p>
                           </Col>
                         </Row>
-                      </Card.Body>
+                      </Card.Footer>
                     </Card>
                   </Link>
                 </Col>

@@ -10,6 +10,15 @@
   .btn-link{
     color: var(--bs-primary)!important;
   }
+  .btn-outline-primary{
+    border-color: var(--bs-primary) !important;
+    color: var(--bs-primary)!important;
+  }
+  
+  .btn-outline-primary:hover{
+    background-color: var(--bs-primary) !important;
+    color: white!important;
+  }
   .bg-primary {
     background-color: var(--bs-primary) !important;
   }
@@ -113,4 +122,26 @@
     padding: 0;
     text-decoration: none;
     display: inline!important;
+}
+.card-product h5{
+    font-size: 18px;
+}
+
+.card-product p{
+    font-size: 14px;
+}
+
+.card-product small{
+    font-size: 12px;
+}
+
+.card-product .card-footer.custom-card-footer{
+    border: 0;
+    background: none!important;
+}
+
+
+.card-product .card-header{
+    border: 0;
+    background: none!important;
 }
