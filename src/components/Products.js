@@ -6,17 +6,17 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { CardText } from "react-bootstrap";
 import { FaRegHeart } from "react-icons/fa";
-import Navbar from "react-bootstrap/Navbar";
-import CustomRating from "./Rating"; // Import the CustomRating component
-import Filter from "./Filter"; // Import the Filter component
+import CustomNavbar from "./Navbar"; // Import the new Navbar component
+import CustomRating from "./Rating";
 import Category from "./Category";
+import { Link } from "react-router-dom"; // Import Link for navigation
 
 const Products = () => {
-  const [products, setProducts] = useState([]); // State to store fetched products
-  const [searchTerm, setSearchTerm] = useState(""); // State for the search input
-  const [categories, setCategories] = useState([]); // State for unique categories
-  const [selectedCategories, setSelectedCategories] = useState([]); // State for selected categories
-  const [suggestions, setSuggestions] = useState([]); // State for search suggestions
+  const [products, setProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
 
   const getProducts = async () => {
     const response = await fetch("https://dummyjson.com/products?limit=40");
@@ -24,12 +24,8 @@ const Products = () => {
 
     if (data && data.products) {
       setProducts(data.products);
-      // Extract unique categories
-      const uniqueCategories = [
-        ...new Set(data.products.map((product) => product.category)),
-      ];
+      const uniqueCategories = [...new Set(data.products.map((product) => product.category))];
       setCategories(uniqueCategories);
-      console.log(data);
     }
   };
 
@@ -37,36 +33,39 @@ const Products = () => {
     getProducts();
   }, []);
 
-  // Filter products based on the search term and selected categories
   const filteredProducts = products.filter((product) => {
-    const matchesSearchTerm = product.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+    const matchesSearchTerm = product.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory =
-      selectedCategories.length === 0 ||
-      selectedCategories.includes(product.category);
+      selectedCategories.length === 0 || selectedCategories.includes(product.category);
     return matchesSearchTerm && matchesCategory;
   });
 
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    if (value) {
+      const filteredSuggestions = products
+        .filter(product => product.title.toLowerCase().includes(value.toLowerCase()))
+        .map(product => product.title);
+      setSuggestions(filteredSuggestions);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
   return (
     <>
-      <Navbar bg="light" expand="lg">
-        <Container>
-          <Navbar.Brand href="#home">Product Store</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Filter
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              suggestions={suggestions}
-              setSuggestions={setSuggestions}
-              categories={categories}
-              selectedCategories={selectedCategories}
-              setSelectedCategories={setSelectedCategories}
-            />
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <CustomNavbar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        suggestions={suggestions}
+        setSuggestions={setSuggestions}
+        categories={categories}
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
+        handleSearchChange={handleSearchChange}
+      />
 
       <Container className="mt-3">
         <Row>
@@ -79,63 +78,58 @@ const Products = () => {
           </Col>
           <Col>
             <Row>
-              {filteredProducts.map((item) => {
-                return (
-                  <Col lg="4" className="col-product" key={item.id}>
-                    <Card className="card-product">
-                      <Row>
-                        <Col className="text-end position-absolute p-0">
-                          <Button variant="link" className="pe-0">
-                            <h3>
-                              <FaRegHeart />
-                            </h3>
-                          </Button>
-                        </Col>
-                      </Row>
-                      <Card.Img
-                        variant="top"
-                        className="card-img-product"
-                        src={item.thumbnail}
-                      />
-                      <Card.Body>
-                        <Card.Title className="text-primary">
-                          {item.title}
-                        </Card.Title>
-                        <p className="text-light">{item.category}</p>
-                        <Row>
-                          <Col>
-                            <Card.Text>
-                              <h3 className="text-danger">
+              {filteredProducts.map((item) => (
+               
+// Inside your return statement of the Products component
+<Col lg="4" className="col-product" key={item.id}>
+    <Link to={`/product/${item.id}`}> {/* Link to product detail page */}
+        <Card className="card-product">
+            <Row>
+                <Col className="text-end position-absolute p-0">
+                    <Button variant="link" className="pe-0">
+                        <h3>
+                            <FaRegHeart />
+                        </h3>
+                    </Button>
+                </Col>
+            </Row>
+            <Card.Img variant="top" className="card-img-product" src={item.thumbnail} />
+            <Card.Body>
+                <Card.Title className="text-primary">{item.title}</Card.Title>
+                <p className="text-light">{item.category}</p>
+                <Row>
+                    <Col>
+                        <Card.Text>
+                            <h3 className="text-danger">
                                 {(
-                                  item.price -
-                                  (item.discountPercentage / 100) * item.price
+                                    item.price - (item.discountPercentage / 100) * item.price
                                 ).toFixed(2)}
-                              </h3>
-                            </Card.Text>
-                          </Col>
-                          <Col className="align-content-center">
-                            <CardText>
-                              <h5 className="text-secondary mb-0">
+                            </h3>
+                        </Card.Text>
+                    </Col>
+                    <Col className="align-content-center">
+                        <CardText>
+                            <h5 className="text-secondary mb-0">
                                 <del>{item.price}</del>
-                              </h5>
-                            </CardText>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col className="mb-3">
-                            {item.stock <= 5 && (
-                              <small className="text-danger">
+                            </h5>
+                        </CardText>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className="mb-3">
+                        {item.stock <= 5 && (
+                            <small className="text-danger">
                                 Only {item.stock} left in stock
-                              </small>
-                            )}
-                          </Col>
-                        </Row>
-                        <CustomRating value={item.rating} />
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                );
-              })}
+                            </small>
+                        )}
+                    </Col>
+                </Row>
+                <CustomRating value={item.rating} />
+            </Card.Body>
+        </Card>
+    </Link>
+</Col>
+              ))}
             </Row>
           </Col>
         </Row>
