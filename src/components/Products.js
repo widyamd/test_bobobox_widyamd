@@ -6,10 +6,11 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { CardText } from "react-bootstrap";
 import { FaRegHeart } from "react-icons/fa";
-import CustomNavbar from "./Navbar"; // Ensure the path is correct
-import CustomRating from "./Rating";
+import CustomNavbar from "./Navbar";
 import Category from "./Category";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
+import { MdOutlineDiscount } from "react-icons/md";
+import RatingFilter from "./RatingFilter";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -17,10 +18,10 @@ const Products = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
+  const [selectedRating, setSelectedRating] = useState(null);
 
-  // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(12); // Number of items per page
+  const [itemsPerPage] = useState(12);
 
   const getProducts = async () => {
     const response = await fetch("https://dummyjson.com/products?limit=40");
@@ -46,10 +47,12 @@ const Products = () => {
     const matchesCategory =
       selectedCategories.length === 0 ||
       selectedCategories.includes(product.category);
-    return matchesSearchTerm && matchesCategory;
+    const matchesRating =
+      selectedRating === null || Math.round(product.rating) === selectedRating;
+
+    return matchesSearchTerm && matchesCategory && matchesRating;
   });
 
-  // Pagination logic
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const currentProducts = filteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
@@ -72,7 +75,6 @@ const Products = () => {
     }
   };
 
-  // Handle Next and Previous button clicks
   const handleNext = () => {
     if (currentPage < totalPages) {
       setCurrentPage((prev) => prev + 1);
@@ -84,6 +86,12 @@ const Products = () => {
       setCurrentPage((prev) => prev - 1);
     }
   };
+
+  const ratingsCount = products.reduce((acc, product) => {
+    const roundedRating = Math.round(product.rating);
+    acc[roundedRating] = (acc[roundedRating] || 0) + 1;
+    return acc;
+  }, {});
 
   return (
     <>
@@ -97,21 +105,41 @@ const Products = () => {
         setSelectedCategories={setSelectedCategories}
         handleSearchChange={handleSearchChange}
       />
-       
+
       <Container className="mt-3">
         <Row>
-          <Col lg="2">
-            <Category
-              categories={categories}
-              selectedCategories={selectedCategories}
-              setSelectedCategories={setSelectedCategories}
-            />
+          <Col lg="3">
+            <Card className="card-rating">
+              <Card.Body>
+                <Row className="mb-3 pb-3 border-bottom">
+                  <Col>
+                    <Category
+                      categories={categories}
+                      selectedCategories={selectedCategories}
+                      setSelectedCategories={setSelectedCategories}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <RatingFilter
+                      ratingsCount={ratingsCount}
+                      selectedRating={selectedRating}
+                      setSelectedRating={setSelectedRating}
+                    />
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
           </Col>
           <Col>
             <Row>
               {currentProducts.map((item) => (
                 <Col lg="4" className="col-product" key={item.id}>
-                  <Link to={`/product/${item.id}`} className="text-decoration-none"> {/* Added class here */}
+                  <Link
+                    to={`/product/${item.id}`}
+                    className="text-decoration-none"
+                  >
                     <Card className="card-product">
                       <Row>
                         <Col className="text-end position-absolute p-0">
@@ -131,11 +159,11 @@ const Products = () => {
                         <Card.Title className="text-primary">
                           {item.title}
                         </Card.Title>
-                        <p className="text-light">{item.category}</p>
                         <Row>
-                          <Col>
+                          <Col lg="5">
                             <Card.Text>
                               <h3 className="text-danger">
+                                <MdOutlineDiscount /> &nbsp;
                                 {(
                                   item.price -
                                   (item.discountPercentage / 100) * item.price
@@ -150,6 +178,11 @@ const Products = () => {
                               </h5>
                             </CardText>
                           </Col>
+                          <Col className="align-content-center">
+                            <p className="mb-0 fw-bold">
+                              {item.discountPercentage}%
+                            </p>
+                          </Col>
                         </Row>
                         <Row>
                           <Col className="mb-3">
@@ -160,14 +193,26 @@ const Products = () => {
                             )}
                           </Col>
                         </Row>
-                        <CustomRating value={item.rating} />
+                        <Row>
+                          <Col className="d-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" 
+                            width="20" height="20" fill="#ffb700" viewBox="0 0 256 256">
+                              <path d="M234.29,114.85l-45,38.83L203,211.75a16.4,16.4,0,0,1-24.5,17.82L128,198.49,77.47,229.57A16.4,16.4,0,0,1,53,211.75l13.76-58.07-45-38.83A16.46,16.46,0,0,1,31.08,86l59-4.76,22.76-55.08a16.36,16.36,0,0,1,30.27,0l22.75,55.08,59,4.76a16.46,16.46,0,0,1,9.37,28.86Z"></path></svg>
+                            &nbsp;  <p>{item.rating.toFixed(1)}</p>
+
+                          </Col>
+                          <Col>
+                            <p className="text-light text-end">
+                              {item.category}
+                            </p>
+                          </Col>
+                        </Row>
                       </Card.Body>
                     </Card>
                   </Link>
                 </Col>
               ))}
             </Row>
-            {/* Pagination Controls */}
             <Row className="mt-4">
               <Col className="d-flex justify-content-center">
                 <Button
@@ -180,7 +225,9 @@ const Products = () => {
                 {Array.from({ length: totalPages }, (_, index) => (
                   <Button
                     key={index + 1}
-                    variant={currentPage === index + 1 ? "primary" : "outline-primary"}
+                    variant={
+                      currentPage === index + 1 ? "primary" : "outline-primary"
+                    }
                     className="mx-1"
                     onClick={() => setCurrentPage(index + 1)}
                   >
