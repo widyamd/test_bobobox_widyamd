@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { CardText } from "react-bootstrap";
 import { FaRegHeart } from "react-icons/fa";
-import { Rating } from '@smastrom/react-rating'
+import { Rating, RoundedStar } from '@smastrom/react-rating'
 
 import '@smastrom/react-rating/style.css'
 
@@ -21,7 +21,11 @@ const Products = () => {
       console.log(data);
     }
   };
-
+  const ratingStyle = {
+    itemShapes: RoundedStar,
+    activeFillColor: '#ffb700',
+    inactiveFillColor: '#fbf1a9'
+  }
   useEffect(() => {
     getProducts();
   }, []);
@@ -32,10 +36,10 @@ const Products = () => {
         <Row>
           {products.map((item) => {
             return (
-              <Col>
-                <Card style={{ width: "18rem" }}>
+              <Col lg="3" className="col-product">
+                <Card className="card-product">
                   <Row>
-                    <Col className="text-end">
+                    <Col className="text-end position-absolute">
                       <Button variant="link">
                         <h3>
                           <FaRegHeart />
@@ -43,13 +47,14 @@ const Products = () => {
                       </Button>
                     </Col>
                   </Row>
-                  <Card.Img variant="top" src={item.thumbnail} />
+                  <Card.Img variant="top" className="card-img-product" src={item.thumbnail} />
                   <Card.Body>
-                    <Card.Title>{item.title}</Card.Title>
-                    <p>{item.category}</p>
+                    <Card.Title className="text-primary">{item.title}</Card.Title>
+                    <p className="text-light">{item.category}</p>
                     <Row>
                       <Col>
                         <Card.Text>
+                       
                           <h2 className="text-danger">
                             {(
                               item.price -
@@ -58,22 +63,25 @@ const Products = () => {
                           </h2>
                         </Card.Text>
                       </Col>
-                      <Col>
+                      <Col className="align-content-center">
                         <CardText>
-                          <h4 className="text-end text-secondary">
+                          <h5 className="text-secondary mb-0" >
                             <del>{item.price}</del>
-                          </h4>
+                          </h5>
                         </CardText>
                       </Col>
                     </Row>
+                   <Row>
+                    <Col className="mb-3">
                     {item.stock <= 5 && (
-                      <p className="text-danger">
+                      <small className="text-danger">
                         Only {item.stock} left in stock
-                      </p>
+                      </small>
                     )}
+                    </Col>
+                   </Row>
                    
-                    {item.rating}
-                    <Rating style={{ maxWidth: 180 }} value={item.rating} readOnly />
+                    <Rating style={{ maxWidth: 180 }} value={item.rating} itemStyles={ratingStyle} readOnly />
                   </Card.Body>
                 </Card>
               </Col>

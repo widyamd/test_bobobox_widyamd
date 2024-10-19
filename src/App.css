@@ -38,8 +38,9 @@
 }
 
 
-/* CUSTOM CSS */
 
-.btn-whislist{
-  right: 0;
+/* MY CUSTOM STYLE */
+.card-product{
+  height: 100%!important;
+  margin-bottom: 8px;
 }

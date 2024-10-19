@@ -1,0 +1,21 @@
+
+
+/* MY CUSTOM STYLE */
+.card-product{
+    height: 100%!important;
+    border-color: #f1f1f1;
+  }
+.card-img-product{
+    background-color: #f7f7f7;
+}
+.col-product{
+    margin-bottom: 8px;
+    padding: 0 4px;
+}
+.card-title.h5{
+    font-size: 18pt
+}
+
+.text-light{
+    color: #a7a7a7!important;
+}
