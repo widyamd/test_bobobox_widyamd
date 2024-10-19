@@ -6,11 +6,16 @@ const CustomNavbar = ({ searchTerm, setSearchTerm, suggestions, setSuggestions, 
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">Product Store</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Row className='w-100'>
+            <Col lg="2">
+            <Navbar.Brand href="#home">Product Store</Navbar.Brand>
+
+            </Col>
+            <Col>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Row className="w-100">
-            <Col md={8}>
+            <Col >
               <InputGroup className="ms-auto">
                 <FormControl
                   placeholder="Search for products..."
@@ -34,6 +39,9 @@ const CustomNavbar = ({ searchTerm, setSearchTerm, suggestions, setSuggestions, 
             </Col>
           </Row>
         </Navbar.Collapse>
+            </Col>
+        </Row>
+       
       </Container>
     </Navbar>
   );
