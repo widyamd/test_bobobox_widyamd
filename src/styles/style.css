@@ -72,47 +72,9 @@
   
 
   /* PRODUCT DETAILS */
-.product-detail {
-  padding: 2rem;
-  background-color: #f8f9fa; /* Light background color */
-  border-radius: 0.5rem; /* Rounded corners */
+.product-image{
+    background-color: #f7f7f7;
 }
-
-.product-image {
-  border-radius: 0.5rem; /* Rounded image corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-.product-title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  font-weight: bold;
-}
-
-.product-description {
-  margin-bottom: 1rem;
-}
-
-.product-price {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.product-discount,
-.product-category,
-.product-rating,
-.product-stock,
-.product-sku,
-.product-brand {
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
-}
-.loading {
-  text-align: center;
-  font-size: 1.5rem;
-  margin-top: 2rem;
-}
-
 .card-rating .card-body{
     padding: 2rem
 

@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { Navbar, Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
 
-const CustomNavbar = ({ searchTerm, setSearchTerm, suggestions, setSuggestions, handleSearchChange }) => {
+const CustomNavbar = ({
+  searchTerm,
+  setSearchTerm,
+  suggestions = [], // Default to an empty array to prevent undefined
+  setSuggestions,
+  handleSearchChange
+}) => {
   const [isCollapsed, setIsCollapsed] = useState(true); // Local state to manage navbar collapse
 
   const handleSuggestionClick = (suggestion) => {
