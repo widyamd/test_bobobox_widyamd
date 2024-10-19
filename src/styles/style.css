@@ -1,4 +1,23 @@
-
+/* src/custom.css */
+:root {
+    --bs-primary: black; /* Replace with your desired color */
+  }
+  
+  .btn-primary {
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+  }
+  .btn-link{
+    color: var(--bs-primary)!important;
+  }
+  .bg-primary {
+    background-color: var(--bs-primary) !important;
+  }
+  
+  .text-primary {
+    color: var(--bs-primary) !important;
+  }
+  
 
 /* MY CUSTOM STYLE */
 .card-product{
@@ -19,3 +38,26 @@
 .text-light{
     color: #a7a7a7!important;
 }
+
+.suggestions-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    position: absolute; 
+    z-index: 1000;
+    background: white; 
+    width: 100%; 
+    max-height: 200px; 
+    overflow-y: auto;
+  }
+  .suggestions-list li {
+    padding: 8px 12px; 
+    cursor: pointer;
+  }
+  .suggestions-list li:hover {
+    background-color: #f1f1f1; 
+  }
+
+  
